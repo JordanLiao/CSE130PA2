@@ -178,15 +178,15 @@ console.log(take(5, zipWith(function(x,y) {return x > y},
 //      Returns a new stream [x_1, x_2, ...].
 //
 function tail(thunk_xs) {
-	//return delay(function() {
+	return delay(function() {
 		let xs = force(thunk_xs);
-		return xs.tail;
+		return force(xs.tail);
 		/*let newXs = force(xs.tail);
 		return {
 			head: newXs.head,
 			tail: enumFrom(newXs.head + 1)
 		}; */
-//	});
+	});
 }
 
 console.log("== TEST: tail ==");
