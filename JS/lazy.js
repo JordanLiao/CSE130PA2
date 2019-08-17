@@ -137,8 +137,8 @@ console.log(take(5, enumFrom(2)));
 // and returns a new stream [f(x_0), f(x_1), ...]
 
 function map(f, thunk_xs) {
-	let xs = force(thunk_xs);
 	return delay(function() {
+		let xs = force(thunk_xs);
 		return {
 			head: f(xs.head),
 			tail: map(f, xs.tail)
@@ -157,9 +157,9 @@ console.log(take(5, xs));
 // [f(x_0,y_0), f(x_1,y_1), ...]
 
 function zipWith(f, thunk_xs, thunk_ys) {
-	let xs = force(thunk_xs);
-	let ys = force(thunk_ys);
 	return delay(function() {
+		let xs = force(thunk_xs);
+		let ys = force(thunk_ys);
 		return {
 			head: f(xs.head, ys.head),
 			tail: zipWith(f, xs.tail, ys.tail)
@@ -178,9 +178,9 @@ console.log(take(5, zipWith(function(x,y) {return x > y},
 //      Returns a new stream [x_1, x_2, ...].
 //
 function tail(thunk_xs) {
-	let xs = force(thunk_xs);
-	let newXs = force(xs.tail);
 	return delay(function() {
+		let xs = force(thunk_xs);
+		let newXs = force(xs.tail);
 		return {
 			head: newXs.head,
 			tail: enumFrom(newXs.head + 1)
