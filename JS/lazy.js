@@ -190,6 +190,7 @@ function tail(thunk_xs) {
 
 console.log("== TEST: tail ==");
 console.log(take(5, tail(enumFrom(2))));
+//console.log(take(5, tail(enumFrom(10))));
 
 // Question 6 (5pts):
 // cons
