@@ -129,7 +129,7 @@ listReverse (x:xs) = (listReverse xs) ++ [x]
 -- False
 
 palindrome :: String -> Bool
-palindrome w = error "TBD"
+palindrome w = w == listReverse w
 
 
 -- | sqSum [x1, ... , xn] should return (x1^2 + ... + xn^2)
@@ -146,8 +146,8 @@ palindrome w = error "TBD"
 sqSum :: [Int] -> Int
 sqSum xs = foldLeft f base xs
   where
-   f a x = error "TBD: sqSum f"
-   base  = error "TBD: sqSum base"
+   f a x = a + x * x
+   base  = 0
 
 
 
@@ -165,8 +165,8 @@ sqSum xs = foldLeft f base xs
 pipe :: [(a -> a)] -> (a -> a)
 pipe fs   = foldLeft f base fs
   where
-    f a x = error "TBD"
-    base  = error "TBD"
+    f a x = \z -> a(x z)
+    base  = \y -> y
 
 -- | `sepConcat sep [s1,...,sn]` returns `s1 ++ sep ++ s2 ++ ... ++ sep ++ sn`
 --
@@ -183,9 +183,9 @@ sepConcat :: String -> [String] -> String
 sepConcat sep []    = ""
 sepConcat sep (h:t) = foldLeft f base l
   where
-    f a x           = error "TBD"
-    base            = error "TBD"
-    l               = error "TBD"
+    f a x           = a ++ sep ++ x
+    base            = h
+    l               = t
 
 
 intString :: Int -> String
@@ -215,7 +215,9 @@ stringOfList f xs = error "TBD"
 -- ["foo", "foo"]
 
 clone :: a -> Int -> [a]
-clone x n = error "TBD"
+clone x n
+ | n == 0 = []
+ | otherwise = x:clone x (n-1)
 
 type BigInt = [Int]
 
@@ -244,7 +246,9 @@ padZero l1 l2 = error "TBD"
 -- []
 
 removeZero :: BigInt -> BigInt
-removeZero ds = error "TBD"
+removeZero (d:ds)
+ | d == 0 = removeZero ds
+ | otherwise = d:ds
 
 
 -- | `bigAdd n1 n2` returns the `BigInt` representing the sum of `n1` and `n2`.
