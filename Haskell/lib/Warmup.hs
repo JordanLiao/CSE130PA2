@@ -38,7 +38,7 @@ foldRight = foldr
 -- 36
 
 sumList :: [Int] -> Int
-sumList xs = error "TBD:sumList"
+sumList xs = foldLeft (\a b -> a + b) 0 xs
 
 
 -- | `digitsOfInt n` should return `[]` if `n` is not positive,
@@ -53,7 +53,7 @@ sumList xs = error "TBD:sumList"
 
 digitsOfInt :: Int -> [Int]
 digitsOfInt 0 = []
-digitsOfInt n = error "TBD:digitsOfInt" 
+digitsOfInt n = digitsOfInt (n `div` 10) ++ [(n `mod` 10)]
 
 
 -- | `digits n` retruns the list of digits of `n`
@@ -86,7 +86,9 @@ digits n = digitsOfInt (abs n)
 -- 2
 
 additivePersistence :: Int -> Int
-additivePersistence n = error "TBD" 
+additivePersistence n 
+ | n < 10 = 0
+ | otherwise = 1 + additivePersistence (sumList (digitsOfInt n))
 
 -- | digitalRoot n is the digit obtained at the end of the sequence
 --   computing the additivePersistence
@@ -94,7 +96,9 @@ additivePersistence n = error "TBD"
 -- >>> digitalRoot 9876
 -- 3
 digitalRoot :: Int -> Int
-digitalRoot n = error "TBD"
+digitalRoot n
+ | n < 10 = n
+ | otherwise = digitalRoot (sumList (digitsOfInt n))
 
 
 -- | listReverse [x1,x2,...,xn] returns [xn,...,x2,x1]
@@ -109,7 +113,9 @@ digitalRoot n = error "TBD"
 -- ["bicycle", "my", "ride", "to", "want", "i"]
 
 listReverse :: [a] -> [a]
-listReverse xs = error "TBD"
+listReverse [] = []
+listReverse (x:xs) = (listReverse xs) ++ [x]
+-- listReverse xs = error "TBD"
 
 -- | In Haskell, a `String` is a simply a list of `Char`, that is:
 --
