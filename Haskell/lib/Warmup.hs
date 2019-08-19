@@ -204,7 +204,7 @@ intString = show
 -- "[[1, 2, 3], [4, 5], [6], []]"
 
 stringOfList :: (a -> String) -> [a] -> String
-stringOfList f xs = error "TBD"
+stringOfList f (x:xs) = "[" ++ (foldLeft (\a x -> a ++ ", " ++ f x) (f x) xs) ++ "]"
 
 -- | `clone x n` returns a `[x,x,...,x]` containing `n` copies of `x`
 --
@@ -246,6 +246,7 @@ padZero l1 l2 = error "TBD"
 -- []
 
 removeZero :: BigInt -> BigInt
+removeZero [] = []
 removeZero (d:ds)
  | d == 0 = removeZero ds
  | otherwise = d:ds
