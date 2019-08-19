@@ -204,7 +204,7 @@ intString = show
 -- "[[1, 2, 3], [4, 5], [6], []]"
 
 stringOfList :: (a -> String) -> [a] -> String
-stringOfList f (x:xs) = "[" ++ (foldLeft (\a x -> a ++ "," ++ f x) (f x) xs) ++ "]"
+stringOfList f (x:xs) = "[" ++ (foldLeft (\a x -> a ++ ", " ++ f x) (f x) xs) ++ "]"
 
 -- | `clone x n` returns a `[x,x,...,x]` containing `n` copies of `x`
 --
