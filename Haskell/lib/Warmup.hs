@@ -233,7 +233,10 @@ type BigInt = [Int]
 -- [1,0,0,2] [0,0,9,9]
 
 padZero :: BigInt -> BigInt -> (BigInt, BigInt)
-padZero l1 l2 = error "TBD"
+padZero l1 l2
+ | length l1 > length l2 = (l1, (clone 0 (length l1 - length l2)) ++ l2)
+ | length l2 > length l1 = ((clone 0 (length l2 - length l1)) ++ l1, l2)
+ | otherwise = (l1, l2)
 
 -- | `removeZero ds` strips out all leading `0` from the left-side of `ds`.
 --
@@ -278,7 +281,10 @@ bigAdd l1 l2     = removeZero res
 -- [8,9,9,9,1]
 
 mulByDigit :: Int -> BigInt -> BigInt
-mulByDigit i l = error "TBD"
+mulByDigit i l = removeZero (carr : result)
+ where
+  (carr, result) = foldRight f (0,[]) l
+  f x (carry, res) = ((i * x + carry) `div` 10, ((i * x + carry) `mod` 10):res)
 
 -- | `bigMul n1 n2` returns the `BigInt` representing the product of `n1` and `n2`.
 --
