@@ -269,9 +269,10 @@ bigAdd l1 l2     = removeZero res
   where
     (l1', l2')               = padZero l1 l2
     (_  , res)               = foldRight f base args
-    f (x1, x2) (carry, sum)  = error "TBD"
-    base                     = error "TBD"
-    args                     = error "TBD"
+    f (x1, x2) (carry, sum)  = (((x1 + x2 + carry) `div` 10) , (((x1 + x2 + carry) `mod` 10) : sum))
+    base                     = (0,[])
+    --args                     = (zip l1' l2')
+    args                     = ((0,0) : (zip l1' l2'))
 
 
 -- | `mulByDigit i n` returns the result of multiplying
@@ -298,6 +299,6 @@ bigMul :: BigInt -> BigInt -> BigInt
 bigMul l1 l2 = res
   where
     (_, res)   = foldRight f base args
-    f x (z, p) = error "TBD"
-    base       = error "TBD"
-    args       = error "TBD"
+    f x (z, p) = (z + 1, (bigAdd p ((mulByDigit x l1) ++ (clone 0 z))))
+    base       = (0,[])
+    args       = l2
